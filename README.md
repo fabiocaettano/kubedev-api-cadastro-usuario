@@ -1,3 +1,6 @@
+<h1>Exercicio: Crie 3 ambientes para a sua API: Developer, Stage e Production. Cada ambiente deve ter as suas respectivas  configurações de ambiente.</h1>
+--- 
+
 Ambiente e Recursos:
 * Windows 10 Pro;
 * WSL2;
@@ -53,7 +56,7 @@ $ kubectl get namespaces
 ```
 ---
 
-5. Service para o MongoDb.
+5. Service Kubernetes.
 
 Criar o arquivo k8s >> mongodb >> service.yaml:
 ``` bash
@@ -82,20 +85,79 @@ $ kubectl apply -f ~/path/service.yaml -n production
 Anotar o IP do service developer, ele sera informado no arquivo ".env" da api.
 
 ``` bash
-kubectl get services --all-namespaces --field-selector metadata.name=mongo-service
+$ kubectl get services --all-namespaces --field-selector metadata.name=mongo-service
 ```
 ---
 
 
-6. Configurar o arquivo ".env" no diretorio da api:
+6. Secrets Kubernetes
+
+
+No bash do linux é possível gerar o bash:
+$ echo -n “nomeDoUsuario” | base64
+$ echo -n “senhaDoUsuario” | base64
+
+
+``` bash
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mongodb-secret  
+type: Opaque
+data:
+  MONGO_INITDB_ROOT_USERNAME: ************
+  MONGO_INITDB_ROOT_PASSWORD: ************
+```
+
+Executar o manifesto:
+
+``` bash
+$ kubectl apply -f ~/path/secret.yaml -n developer
+```
+---
+
+
+7. Deployment Kubernetes
+
+Criar o manifesto deployment.yaml, no diretorio k8s/mongodb:
+
+``` bash
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb-deployment
+spec:
+  selector:
+    matchLabels:
+      app: mongodb
+  template:
+    metadata:
+      labels:
+        app: mongodb
+    spec:
+      containers:
+        - name: mongodb
+          image: mongo:4.2.8
+          ports:
+            - containerPort: 27017
+          envFrom:
+            - secretRef:
+                name: mongodb-secret
+```
+
+Aplicar o manifesto:
+$ kubectl apply -f ./k8s/mongodb/deployment.yaml -n developer
+---
+
+
+8. Configurar o arquivo ".env" no diretorio da api:
 
 ``` bash
 DB_URI_DEVELOPER=mongodb://mongouser:mongopwd@10.245.89.18:27017/admin
 ```
 ---
 
-
-7. Criar o arquivo Dockerfile no diretório da api:
+9. Criar o arquivo Dockerfile no diretório da api:
 
 ``` bash
 FROM node:alpine
