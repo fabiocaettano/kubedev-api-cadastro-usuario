@@ -7,18 +7,18 @@ Ambiente e Recursos:
 * IDE Visual Studio Code.
 
 ---
+1. Cluser Kubernetes.
 
-1. Cria o cluser Kubernetes.
-
-Realizar o Download do arquivo config.
 
 ---
+2. Realizar o Download do arquivo config.
 
-2. O arquivo config gerado pelo Kubernetes deverá ser colocado na pasta ".kube" no Ubuntu.
+O arquivo config gerado pelo Kubernetes deverá ser colocado na pasta ".kube".
 
 Executar o aplicativo WSL no Windows.
 
 Digitar o comando abaixo no console do WSL, para mover e renomear o arquivo para pasta ".kube":
+
 ``` bash
 $ mv /mnt/c/Users/nomeDoUsuario/Downloads/k8s-1-21-9-do-0-nyc1-1644109980898-kubeconfig.yaml ~/.kube/config
 ```
@@ -28,8 +28,11 @@ Comando no Prompot do Ubuntu:
 ``` bash
 $ kubernetes get nodes
 ```
+---
+
 
 3. Criar os namespaces.
+
 O namespace ira separar os ambinentes em:  Developer, Stage e Production.
 Comando no Prompot do Ubuntu:
 ``` bash
@@ -42,8 +45,11 @@ Consultar os namespaces:
 ``` bash
 $ kubectl get namespaces
 ```
+---
 
-4. Criar o serviço para o MongoDb.
+4. Service para o MongoDb.
+
+Criar o arquivo k8s >> mongodb >> service.yaml:
 ``` bash
 apiVersion: v1
 kind: Service
@@ -58,6 +64,43 @@ spec:
   type: ClusterIP
 ```
 
+Executar o manifesto e vincular com o namespace:
+
+``` bash
+$ kubectl apply -f ~/path/service.yaml -n developer
+$ kubectl apply -f ~/path/service.yaml -n stage
+$ kubectl apply -f ~/path/service.yaml -n production
+
+```
+
+Anotar o IP do service developer, ele sera informado no arquivo ".env" da api.
+
+``` bash
+kubectl get services --all-namespaces --field-selector metadata.name=mongo-service
+```
+---
+
+
+5. Configurar o arquivo ".env" da api:
+
+``` bash
+DB_URI_DEVELOPER=mongodb://mongouser:mongopwd@10.245.89.18:27017/admin
+```
+---
+
+
+6. Arquivo Dockerfile:
+
+``` bash
+FROM node:alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+RUN npm install dotenv
+COPY . .
+EXPOSE 8080
+CMD [ "npm", "start" ]
+```
 
 Criar a imagem com base no arquivo Dockerfile:
  ``` bash
