@@ -4,24 +4,17 @@
 
 <h2>Cada ambiente deve ter as suas respectivas  configurações de ambiente.</h2>
 
---- 
-
-Ambiente e Recursos:
-* Windows 10 Pro;
-* WSL2;
-* Ubuntu 20.04;
-* Docker;
-* Kubernetes (Digital Ocean);
-* IDE Visual Studio Code.
-
----
+Recursos para este exercicio:
+- Windows 10 Pro;
+- WSL2;
+- Ubuntu 20.04;
+- Docker;
+- Kubernetes (Digital Ocean);
+- IDE Visual Studio Code.
 
 1. Criar um Cluster Kubernetes.
 
 Para este exercicio foi utilizado o Kubernetes da Digital Ocean.
-
----
-
 
 2. Realizar o Download do arquivo "config".
 
@@ -36,8 +29,6 @@ Isto irá mover e renomear o arquivo para pasta ".kube":
 ``` bash
 $ mv /mnt/c/Users/nomeDoUsuario/Downloads/k8s-1-21-9-do-0-nyc1-1644109980898-kubeconfig.yaml ~/.kube/config
 ```
----
-
 
 3. Acessar o Ubuntu:
 
@@ -47,8 +38,6 @@ Comando no Prompot do Ubuntu:
 ``` bash
 $ kubernetes get nodes
 ```
----
-
 
 4. Criar os namespaces.
 
@@ -63,7 +52,7 @@ Consultar os namespaces:
 ``` bash
 $ kubectl get namespaces
 ```
----
+
 
 5. Service Kubernetes.
 
@@ -96,8 +85,6 @@ Anotar o IP do service developer, ele sera informado no arquivo ".env" da api.
 ``` bash
 $ kubectl get services --all-namespaces --field-selector metadata.name=mongo-service
 ```
----
-
 
 6. Secrets Kubernetes
 
@@ -123,7 +110,7 @@ Executar o manifesto:
 ``` bash
 $ kubectl apply -f ~/k8s/mongodb/secret.yaml -n developer
 ```
----
+
 
 
 7. Deployment Kubernetes
@@ -154,8 +141,13 @@ spec:
                 name: mongodb-secret
 ```
 
-Aplicar o manifesto:
-$ kubectl apply -f ./k8s/mongodb/deployment.yaml -n developer
+
+
+
+
+
+
+
 
 ---
 
@@ -179,6 +171,11 @@ COPY . .
 EXPOSE 8080
 CMD [ "npm", "start" ]
 ```
+
+10. Titulo
+11. Titulo
+12. Titulo
+
 
 Criar a imagem com base no arquivo Dockerfile:
  ``` bash
