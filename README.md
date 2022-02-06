@@ -17,13 +17,20 @@ O arquivo config gerado pelo Kubernetes deverá ser colocado na pasta ".kube".
 
 Executar o aplicativo WSL no Windows.
 
-Digitar o comando abaixo no console do WSL, para mover e renomear o arquivo para pasta ".kube":
+Digitar o comando abaixo no console do WSL.
+
+Isto irá mover e renomear o arquivo para pasta ".kube":
 
 ``` bash
 $ mv /mnt/c/Users/nomeDoUsuario/Downloads/k8s-1-21-9-do-0-nyc1-1644109980898-kubeconfig.yaml ~/.kube/config
 ```
+---
 
-Checar a conexão com o Kubernetes, o resultado serão os nodes configurados na criação do cluster.
+
+3. Acessar o Ubunutu:
+
+Checar a conexão com o Kubernetes.
+O resultado serão os nodes configurados na criação do cluster.
 Comando no Prompot do Ubuntu:
 ``` bash
 $ kubernetes get nodes
@@ -31,10 +38,9 @@ $ kubernetes get nodes
 ---
 
 
-3. Criar os namespaces.
+4. Criar os namespaces.
 
 O namespace ira separar os ambinentes em:  Developer, Stage e Production.
-Comando no Prompot do Ubuntu:
 ``` bash
 $ kubectl create namespace developer
 $ kubectl create namespace stage
@@ -47,7 +53,7 @@ $ kubectl get namespaces
 ```
 ---
 
-4. Service para o MongoDb.
+5. Service para o MongoDb.
 
 Criar o arquivo k8s >> mongodb >> service.yaml:
 ``` bash
@@ -81,7 +87,7 @@ kubectl get services --all-namespaces --field-selector metadata.name=mongo-servi
 ---
 
 
-5. Configurar o arquivo ".env" da api:
+6. Configurar o arquivo ".env" no diretorio da api:
 
 ``` bash
 DB_URI_DEVELOPER=mongodb://mongouser:mongopwd@10.245.89.18:27017/admin
@@ -89,7 +95,7 @@ DB_URI_DEVELOPER=mongodb://mongouser:mongopwd@10.245.89.18:27017/admin
 ---
 
 
-6. Arquivo Dockerfile:
+7. Criar o arquivo Dockerfile no diretório da api:
 
 ``` bash
 FROM node:alpine
