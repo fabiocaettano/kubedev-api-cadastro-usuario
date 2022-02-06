@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-deployment
+  namespace: api-nodejs
+spec:
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:          
+      labels:
+        app: api
+    spec:            
+      containers:
+      - name: api
+        image: fabiocaettano74/api-cadastro-usuario:v6
+        ports:
+        - containerPort: 8080
+          name: http
+        - containerPort: 443
+          name: https
+        imagePullPolicy: Always
+        envFrom:
+          - configMapRef:
+              name: configmap-api
+        env:
+          - name: Mongo__User
+            valueFrom:
+              secretKeyRef:
+                key: MONGO_INITDB_ROOT_USERNAME
+                name: mongodb-secret
+          - name: Mongo__Password
+            valueFrom:
+              secretKeyRef:
+                key: MONGO_INITDB_ROOT_PASSWORD
+                name: mongodb-secret           
