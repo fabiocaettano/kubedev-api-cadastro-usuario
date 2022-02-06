@@ -1,6 +1,8 @@
 <h1>Exercicio</h1>
 
-<h2> Crie 3 ambientes para a sua API: Developer, Stage e Production. Cada ambiente deve ter as suas respectivas  configurações de ambiente.</h2>
+<h2> Crie 3 ambientes para a sua API: Developer, Stage e Production.</h2> 
+
+<h2>Cada ambiente deve ter as suas respectivas  configurações de ambiente.</h2>
 
 --- 
 
@@ -13,11 +15,15 @@ Ambiente e Recursos:
 * IDE Visual Studio Code.
 
 ---
-1. Cluser Kubernetes.
 
+1. Criar um Cluster Kubernetes.
+
+Para este exercicio foi utilizado o Kubernetes da Digital Ocean.
 
 ---
-2. Realizar o Download do arquivo config.
+
+
+2. Realizar o Download do arquivo "config".
 
 O arquivo config gerado pelo Kubernetes deverá ser colocado na pasta ".kube".
 
@@ -33,7 +39,7 @@ $ mv /mnt/c/Users/nomeDoUsuario/Downloads/k8s-1-21-9-do-0-nyc1-1644109980898-kub
 ---
 
 
-3. Acessar o Ubunutu:
+3. Acessar o Ubuntu:
 
 Checar a conexão com o Kubernetes.
 O resultado serão os nodes configurados na criação do cluster.
@@ -61,7 +67,7 @@ $ kubectl get namespaces
 
 5. Service Kubernetes.
 
-Criar o arquivo k8s >> mongodb >> service.yaml:
+Criar o manifesto service.yaml, no diretório k8s/mongodb:
 ``` bash
 apiVersion: v1
 kind: Service
@@ -79,9 +85,9 @@ spec:
 Executar o manifesto e vincular com o namespace:
 
 ``` bash
-$ kubectl apply -f ~/path/service.yaml -n developer
-$ kubectl apply -f ~/path/service.yaml -n stage
-$ kubectl apply -f ~/path/service.yaml -n production
+$ kubectl apply -f ~/k8s/mongodb/service.yaml -n developer
+$ kubectl apply -f ~/k8s/mognodb/service.yaml -n stage
+$ kubectl apply -f ~/k8s/mongodb/service.yaml -n production
 
 ```
 
@@ -95,12 +101,12 @@ $ kubectl get services --all-namespaces --field-selector metadata.name=mongo-ser
 
 6. Secrets Kubernetes
 
-
-No bash do linux é possível gerar o bash:
+No linux é possível gerar o bash:
 $ echo -n “nomeDoUsuario” | base64
 $ echo -n “senhaDoUsuario” | base64
 
 
+Criar o manifesto secret.yaml, no diretório k8s/mongodb:
 ``` bash
 apiVersion: v1
 kind: Secret
@@ -115,7 +121,7 @@ data:
 Executar o manifesto:
 
 ``` bash
-$ kubectl apply -f ~/path/secret.yaml -n developer
+$ kubectl apply -f ~/k8s/mongodb/secret.yaml -n developer
 ```
 ---
 
@@ -150,6 +156,7 @@ spec:
 
 Aplicar o manifesto:
 $ kubectl apply -f ./k8s/mongodb/deployment.yaml -n developer
+
 ---
 
 
