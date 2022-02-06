@@ -1,4 +1,7 @@
-<h1>Exercicio: Crie 3 ambientes para a sua API: Developer, Stage e Production. Cada ambiente deve ter as suas respectivas  configurações de ambiente.</h1>
+<h1>Exercicio</h1>
+
+<h2> Crie 3 ambientes para a sua API: Developer, Stage e Production. Cada ambiente deve ter as suas respectivas  configurações de ambiente.</h2>
+
 --- 
 
 Ambiente e Recursos:
