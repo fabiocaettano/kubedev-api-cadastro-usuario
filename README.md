@@ -6,9 +6,13 @@ Ambiente e Recursos:
 * Kubernetes (Digital Ocean);
 * IDE Visual Studio Code.
 
+---
 
 1. Cria o cluser Kubernetes.
-   Realizar o Download do arquivo config.
+
+Realizar o Download do arquivo config.
+
+---
 
 2. O arquivo config gerado pelo Kubernetes deverá ser colocado na pasta ".kube" no Ubuntu.
 
