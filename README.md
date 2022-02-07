@@ -8,12 +8,14 @@
 <br/>
 
 <h3>Ferramentas utilizadas neste exercicio:</h3>
-- Windows 10 Pro;
-- WSL2;
-- Ubuntu 20.04;
-- Docker;
-- Kubernetes (Digital Ocean);
-- IDE Visual Studio Code.
+
+1. Windows 10 Pro;
+2. WSL2;
+3. Ubuntu 20.04;
+4. Docker;
+5. Git;
+6. Kubernetes (Digital Ocean);
+7. IDE Visual Studio Code.
 <br/>
 <br/>
 
