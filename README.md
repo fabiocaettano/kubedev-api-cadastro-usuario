@@ -12,14 +12,16 @@
 - Kubernetes (Digital Ocean);
 - IDE Visual Studio Code.
 <br/>
-
+<br/>
 
 2. <h3>Criar um Cluster Kubernetes.</h3>
 
 Para este exercicio foi utilizado o Kubernetes da Digital Ocean.
 <br/>
+<br/>
 
-3. <b>Realizar o Download do arquivo "config".</b>
+
+3. <h3>Realizar o Download do arquivo "config".</h3>
 
 O arquivo config gerado pelo Kubernetes deverá ser colocado na pasta ".kube".
 
@@ -33,8 +35,9 @@ Isto irá mover e renomear o arquivo para pasta ".kube":
 $ mv /mnt/c/Users/nomeDoUsuario/Downloads/k8s-1-21-9-do-0-nyc1-1644109980898-kubeconfig.yaml ~/.kube/config
 ```
 <br/>
+<br/>
 
-4. <b>Acessar o Ubuntu</b>
+4. <h3>Acessar o Ubuntu</h3>
 
 Checar a conexão com o Kubernetes.
 O resultado serão os nodes configurados na criação do cluster.
