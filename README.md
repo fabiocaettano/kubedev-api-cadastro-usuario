@@ -202,7 +202,7 @@ DB_PWD=********
 
 No arquivo server.js configurar o endereço do MongoDb através da variável de ambiente.
 
-``` bash
+``` js
 mongoose.connect(process.env.DB_URI_DEVELOPER,{
     useUnifiedTopology: true,
     useNewUrlParser: true,
@@ -220,7 +220,7 @@ mongoose.connect(process.env.DB_URI_DEVELOPER,{
 <h3>Mensagem de Boas Vindas</h3>
 No arquivo src/route.js da api, configurar no endpoint uma mensagem de retorno para indicar qual ambiente está sendo indicado:
 
-``` bash
+``` js
 routes.get('/',function(req,res){
     res.json({message: "Bem vindo ao Backend MongoDb - DEVELOPER"})
 })
@@ -445,7 +445,7 @@ mongoose.connect(process.env.DB_URI_STAGE,{
 
     }
 }
-
+```
 
 No arquivo src/route.js da api, configurar no endpoint uma mensagem de retorno para indicar qual ambiente está sendo indicado:
 ``` js
