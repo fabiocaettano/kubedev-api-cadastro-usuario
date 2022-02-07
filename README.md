@@ -19,7 +19,7 @@
 <br/>
 <br/>
 
-<h3>Cluster Kubernetes.</h3>
+<h3>Cluster Kubernetes</h3>
 
 Neste exercicio para criar o cluster Kubernetes foi utilizado o serviço da Digital Ocean.
 <br/>
@@ -70,7 +70,7 @@ $ kubectl get namespaces
 <br/>
 <br/>
 
-<h3>Service Kubernetes</h3>
+<h3>Service Kubernetes (MongoDb)</h3>
 
 Criar o manifesto service.yaml, no diretório k8s/mongodb:
 ``` bash
@@ -105,7 +105,7 @@ $ kubectl get services --all-namespaces --field-selector metadata.name=mongo-ser
 <br/>
 <br/>
 
-<h3>Secrets Kubernetes</h3>
+<h3>Secrets Kubernetes (MongoDb)</h3>
 
 No linux é possível gerar o bash:
 ``` bash
@@ -135,7 +135,7 @@ $ kubectl apply -f ~/k8s/mongodb/secret.yaml -n developer
 <br/>
 
 
-<h3>Deployment Kubernetes</h3>
+<h3>Deployment Kubernetes (MongoDb)</h3>
 
 Criar o manifesto deployment.yaml, no diretorio k8s/mongodb:
 
@@ -331,34 +331,38 @@ Aplicar o manifesto:
 ``` bash
 $ kubectl apply -f ~/path/deployment.yaml -n developer
 ```
+<br/>
+<br/>
 
-17. Consultar todos os serviços:
+
+<h3> Consultar Cluster e Testar API</h3>
+
+Checar todos os objetos Kubernetes
 ``` bash
 $ kubectl get all -n developer
 ```
 
-18. Anotar o IP do service-api:
+Anotar o IP do service-api:
 ``` bash
 $ kubectl get services -n developer
 ```
 
-19. Testar api
-
+Testar api:
 ``` bash
 $ kubectl run -i -t --image fabiocaettano74/ubuntu-with-curl:v1 ping-test --restart=Never --rm /bin/bash
 ```
 
-Consulta:
+Consultar o endpoint para receber a mensagem de boas vindas:
 ``` bash
 root@ping-test:/# curl http://10.245.219.223:8080
 ```
 
-Realizar um insert:
+Incluir um registro:
 ``` bash
 root@ping-test:/# curl -X POST -d '{"nome":"amora","senha":"898989"}' -H "Content-Type: application/json" http://10.245.219.223:8080/usuario
 ```
 
-Outra consulta:
+Realizar consulta:
 ``` bash
 root@ping-test:/# curl http://10.245.219.223:8080/usuario
 ```
