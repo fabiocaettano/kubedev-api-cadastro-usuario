@@ -4,14 +4,14 @@
 
 <h2>Cada ambiente deve ter as suas respectivas  configurações de ambiente.</h2>
 
-1. ~~Ferramentas utilizadas neste exercicio:~~
+1. Ferramentas utilizadas neste exercicio:
 - Windows 10 Pro;
 - WSL2;
 - Ubuntu 20.04;
 - Docker;
 - Kubernetes (Digital Ocean);
 - IDE Visual Studio Code.
-
+<br>
 2. Criar um Cluster Kubernetes.
 
 Para este exercicio foi utilizado o Kubernetes da Digital Ocean.
