@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: api-deployment
-  namespace: api-nodejs
 spec:
   selector:
     matchLabels:
@@ -14,7 +13,7 @@ spec:
     spec:            
       containers:
       - name: api
-        image: fabiocaettano74/api-cadastro-usuario:v6
+        image: fabiocaettano74/api-cadastro-usuario-developer:v02
         ports:
         - containerPort: 8080
           name: http

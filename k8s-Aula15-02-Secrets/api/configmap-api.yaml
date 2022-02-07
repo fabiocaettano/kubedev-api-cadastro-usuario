@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: configmap-api
-  namespace: api-nodejs
-data:
-  Mongo__Database: admin
-  Mongo__Host: service-mongo
-  Mongo__Port: "27017" 
