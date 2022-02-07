@@ -4,7 +4,7 @@
 
 <h2>Cada ambiente deve ter as suas respectivas  configurações de ambiente.</h2>
 
-1. Ferramentas utilizadas neste exercicio:
+1. ~~Ferramentas utilizadas neste exercicio:~~
 - Windows 10 Pro;
 - WSL2;
 - Ubuntu 20.04;
@@ -184,7 +184,7 @@ EXPOSE 8080
 CMD [ "npm", "start" ]
 ```
 
-12. Criar a imagem
+Criar a imagem
 ``` bash
 $ docker build -t fabiocaettano74/api-cadastro-usuario:developer .
 ```
