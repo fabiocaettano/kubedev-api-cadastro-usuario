@@ -21,7 +21,7 @@
 
 <h3>Criar um Cluster Kubernetes.</h3>
 
-Para este exercicio foi utilizado o Kubernetes da Digital Ocean.
+Nste exercicio para criar o cluster Kubernetes foi utilizado o serviço da Digital Ocean.
 <br/>
 <br/>
 
@@ -54,7 +54,7 @@ $ kubernetes get nodes
 <br/>
 
 
-5. <h3>Criar os namespaces</h3>
+<h3>Criar os namespaces</h3>
 
 O namespace ira separar os ambinentes em:  Developer, Stage e Production.
 ``` bash
@@ -70,7 +70,7 @@ $ kubectl get namespaces
 <br/>
 <br/>
 
-6. <b>Service Kubernetes</b>
+<h3>Service Kubernetes</h3>
 
 Criar o manifesto service.yaml, no diretório k8s/mongodb:
 ``` bash
@@ -102,7 +102,10 @@ Anotar o IP do service developer, ele sera informado no arquivo ".env" da api.
 $ kubectl get services --all-namespaces --field-selector metadata.name=mongo-service
 ```
 
-7. Secrets Kubernetes
+<br/>
+<br/>
+
+<h3>Secrets Kubernetes</h3>
 
 No linux é possível gerar o bash:
 ``` bash
@@ -128,9 +131,11 @@ Executar o manifesto:
 ``` bash
 $ kubectl apply -f ~/k8s/mongodb/secret.yaml -n developer
 ```
+<br/>
+<br/>
 
 
-8. Deployment Kubernetes
+<h3>Deployment Kubernetes</h3>
 
 Criar o manifesto deployment.yaml, no diretorio k8s/mongodb:
 
@@ -157,6 +162,8 @@ spec:
             - secretRef:
                 name: mongodb-secret
 ```
+<br/>
+<br/>
 
 
 
