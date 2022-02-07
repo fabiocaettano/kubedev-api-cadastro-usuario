@@ -196,8 +196,8 @@ spec:
 Configurar o arquivo ".env" no diretorio da api
 ``` bash
 DB_URI_DEVELOPER=mongodb://mongouser:mongopwd@10.245.89.18:27017/admin   
-DB_USER=mongouser
-DB_PWD=mongopwd
+DB_USER=*********
+DB_PWD=********
 ```
 
 No arquivo server.js configurar o endereço do MongoDb através da variável de ambiente.
@@ -400,6 +400,7 @@ root@ping-test:/# curl http://10.245.219.223:8080/usuario
  
  Enviar aplicação para o Git Hub o branch developer:
  ``` bash
+$ git init
 $ git add .
 $ git commit -m “versao developer”
 $ git branch -M developer
@@ -410,3 +411,116 @@ $ git push -u origin developer
 ***
 
 <h1>Ambiente Stage </h1>
+
+Criar ambiente para o stage na api:
+``` bash
+$ git branch stage
+$ git checkout stage
+```
+
+
+Aplicar o manifesto Service e Secret:
+
+``` bash
+$ kubectl apply -f ~/k8s/mognodb/service.yaml -n stage
+$ kubectl apply -f ~/k8s/mongodb/secret.yaml -n stage
+```
+
+Configurar o arquivo ".env" no diretorio da api
+``` .env
+DB_URI_STAGE=mongodb://mongouser:mongopwd@XX.XXX.XXX.XX:27017/admin   
+DB_USER=*********
+DB_PWD=********
+```
+
+
+No arquivo server.js configurar o endereço do MongoDb através da variável de ambiente.
+``` js
+mongoose.connect(process.env.DB_URI_STAGE,{
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+    auth:{
+        user : process.DB_USER,
+        password : process.DB_PWD
+
+    }
+}
+
+
+No arquivo src/route.js da api, configurar no endpoint uma mensagem de retorno para indicar qual ambiente está sendo indicado:
+``` js
+routes.get('/',function(req,res){
+    res.json({message: "Bem vindo ao Backend MongoDb - STAGE"})
+})
+```
+
+Criar a imagem:
+
+``` bash
+$ docker build -t fabiocaettano74/api-cadastro-usuario-stage:v01 .
+```
+
+Upload para o docker hub:
+``` bash
+$ docker push fabiocaettano74/api-cadastro-usuario-stage:v01
+```
+
+No manifesto do deplyment da api informar a imagem da api: 
+``` kubernetes
+spec:            
+      containers:
+      - name: api
+        image: fabiocaettano74/api-cadastro-usuario-stage:v01
+```
+
+Apicar o manifesto para API:
+$ kubectl apply -f ~/path/configmap.yaml – n stage
+$ kubectl apply -f ~/k8s/api/service.yaml – n stage
+$ kubectl apply -f ~/path/deployment.yaml -n stage
+
+
+<h3> Consultar Cluster e Testar API</h3>
+
+Checar todos os objetos Kubernetes
+``` bash
+$ kubectl get all -n stage
+```
+
+Anotar o IP do service-api:
+``` bash
+$ kubectl get services -n stage
+```
+
+Testar api:
+``` bash
+$ kubectl run -i -t --image fabiocaettano74/ubuntu-with-curl:v1 ping-test --restart=Never --rm /bin/bash
+```
+
+Consultar o endpoint para receber a mensagem de boas vindas:
+``` bash
+root@ping-test:/# curl http://XX.XXX.XXX.XX:8080
+```
+
+Incluir um registro:
+``` bash
+root@ping-test:/# curl -X POST -d '{"nome":"amora","senha":"898989"}' -H "Content-Type: application/json" http://XX.XX.XXX.XX:8080/usuario
+```
+
+Realizar consulta:
+``` bash
+root@ping-test:/# curl http://XX.XXX.XXX.XX:8080/usuario
+```
+
+<br/>
+<br/>
+
+ <h3>Git</h3>
+ 
+ Enviar aplicação para o Git Hub o branch stage:
+ ``` bash
+$ git add .
+$ git commit -m “versao stage”
+$ git push -u origin stage
+```
+
+***
