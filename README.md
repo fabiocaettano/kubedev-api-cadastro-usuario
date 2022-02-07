@@ -115,15 +115,6 @@ Executar o manifesto e vincular com o namespace:
 
 ``` bash
 $ kubectl apply -f ~/k8s/mongodb/service.yaml -n developer
-$ kubectl apply -f ~/k8s/mognodb/service.yaml -n stage
-$ kubectl apply -f ~/k8s/mongodb/service.yaml -n production
-
-```
-
-Anotar o IP dos services, para ser utilizado no arquivo ".env" da api.
-
-``` bash
-$ kubectl get services --all-namespaces --field-selector metadata.name=mongo-service
 ```
 
 <br/>
@@ -155,6 +146,7 @@ Executar o manifesto:
 ``` bash
 $ kubectl apply -f ~/k8s/mongodb/secret.yaml -n developer
 ```
+
 <br/>
 <br/>
 
@@ -186,12 +178,25 @@ spec:
             - secretRef:
                 name: mongodb-secret
 ```
+
+Executar o manifesto.
+``` bash
+$ kubectl apply -f ./k8s/mognodb/deployment.yaml -n developer
+```
+
 <br/>
 <br/>
 
 
 
 <h3>Variaveis de Ambiente</h3>
+
+Anotar o IP dos services, para ser utilizado no arquivo ".env" da api.
+
+``` bash
+$ kubectl get services -n developer
+```
+
 
 Configurar o arquivo ".env" no diretorio da api
 ``` bash
@@ -277,7 +282,7 @@ data:
 
 Aplicar o manifesto:
 ``` bash
-$ kubectl apply -f ~/path/configmap.yaml – n developer
+$ kubectl apply -f ./k8s/api/configmap.yaml – n developer
 ```
 <br/>
 <br/>
@@ -306,7 +311,7 @@ spec:
 
 Aplicar o manifesto:
 ``` bash
-$ kubectl apply -f ~/k8s/api/service.yaml – n developer
+$ kubectl apply -f ./k8s/api/service.yaml – n developer
 ```
 <br/>
 <br/>
@@ -355,46 +360,11 @@ spec:
 
 Aplicar o manifesto:
 ``` bash
-$ kubectl apply -f ~/path/deployment.yaml -n developer
+$ kubectl apply -f ./k8s/api/deployment.yaml -n developer
 ```
 <br/>
 <br/>
 
-
-<h3> Consultar Cluster e Testar API</h3>
-
-Checar todos os objetos Kubernetes
-``` bash
-$ kubectl get all -n developer
-```
-
-Anotar o IP do service-api:
-``` bash
-$ kubectl get services -n developer
-```
-
-Testar api:
-``` bash
-$ kubectl run -i -t --image fabiocaettano74/ubuntu-with-curl:v1 ping-test --restart=Never --rm /bin/bash
-```
-
-Consultar o endpoint para receber a mensagem de boas vindas:
-``` bash
-root@ping-test:/# curl http://10.245.219.223:8080
-```
-
-Incluir um registro:
-``` bash
-root@ping-test:/# curl -X POST -d '{"nome":"amora","senha":"898989"}' -H "Content-Type: application/json" http://10.245.219.223:8080/usuario
-```
-
-Realizar consulta:
-``` bash
-root@ping-test:/# curl http://10.245.219.223:8080/usuario
-```
-
-<br/>
-<br/>
 
  <h3>Git</h3>
  
@@ -477,7 +447,7 @@ Upload para o docker hub:
 $ docker push fabiocaettano74/api-cadastro-usuario-stage:v01
 ```
 
-No manifesto do deplyment da api informar a imagem da api: 
+No manifesto do deployment da api informar a imagem da api: 
 ``` kubernetes
 spec:            
       containers:
@@ -513,18 +483,21 @@ $ git push -u origin stage
 <br/>
 
 
+
 <h1> Consultar Cluster e Testar API</h1>
 
 
-Anotar o IP do service-api:
+Esta consulta irá retornar o IP de cada ambiente.
 ``` bash
 $ kubectl get services --all-namespaces --field-selector metadata.name=service-api
 ```
 
-Testar api:
+Para testar api, execute:
 ``` bash
 $ kubectl run -i -t --image fabiocaettano74/ubuntu-with-curl:v1 ping-test --restart=Never --rm /bin/bash
 ```
+
+Informe o IP do service para realizar os testes.
 
 Consultar o endpoint para receber a mensagem de boas vindas.
 ``` bash
