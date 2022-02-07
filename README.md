@@ -87,6 +87,13 @@ $ kubectl get namespaces
 <br/>
 <br/>
 
+***
+
+<h1>Ambiente Developer</h1>
+
+<br/>
+<br/>
+
 <h3>Service Kubernetes (MongoDb)</h3>
 
 Criar o manifesto service.yaml, no diretório k8s/mongodb:
@@ -188,7 +195,9 @@ spec:
 
 Configurar o arquivo ".env" no diretorio da api
 ``` bash
-DB_URI_DEVELOPER=mongodb://mongouser:mongopwd@10.245.89.18:27017/admin
+DB_URI_DEVELOPER=mongodb://mongouser:mongopwd@10.245.89.18:27017/admin   
+DB_USER=mongouser
+DB_PWD=mongopwd
 ```
 
 No arquivo server.js configurar o endereço do MongoDb através da variável de ambiente.
@@ -236,7 +245,7 @@ CMD [ "npm", "start" ]
 
 Criar a imagem
 ``` bash
-$ docker build -t fabiocaettano74/api-cadastro-usuario:developer .
+$ docker build -t fabiocaettano74/api-cadastro-usuario-developer:v01 .
 ```
 <br/>
 <br/>
@@ -246,7 +255,7 @@ $ docker build -t fabiocaettano74/api-cadastro-usuario:developer .
 
 Upload para o docker hub:
 ``` bash
-$ docker push fabiocaettano74/api-cadastro-usuario:developer
+$ docker push fabiocaettano74/api-cadastro-usuario-developer:v01
 ```
 <br/>
 <br/>
@@ -383,3 +392,21 @@ Realizar consulta:
 ``` bash
 root@ping-test:/# curl http://10.245.219.223:8080/usuario
 ```
+
+<br/>
+<br/>
+
+ <h3>Git</h3>
+ 
+ Enviar aplicação para o Git Hub o branch developer:
+ ``` bash
+$ git add .
+$ git commit -m “versao developer”
+$ git branch -M developer
+$ git remote add origin https://github.com/fabiocaettano/kubedev-api-cadastro-usuario.git
+$ git push -u origin developer
+```
+
+***
+
+<h1>Ambiente Stage </h1>

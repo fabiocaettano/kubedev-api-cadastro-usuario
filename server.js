@@ -15,8 +15,8 @@ mongoose.connect(process.env.DB_URI_DEVELOPER,{
     useUnifiedTopology: true,
     useNewUrlParser: true,
     auth:{
-        user : "mongouser",
-        password : "mongopwd"
+        user : process.env.DB_USER,
+        password : process.env.DB_PWD
 
     }
 },function(err){
