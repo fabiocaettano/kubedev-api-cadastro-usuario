@@ -4,7 +4,7 @@
 
 <h2>Cada ambiente deve ter as suas respectivas  configurações de ambiente.</h2>
 
-1. Ferramentas utilizadas neste exercicio:
+1. <b>Ferramentas utilizadas neste exercicio:</b>
 - Windows 10 Pro;
 - WSL2;
 - Ubuntu 20.04;
@@ -12,9 +12,11 @@
 - Kubernetes (Digital Ocean);
 - IDE Visual Studio Code.
 <br>
-2. Criar um Cluster Kubernetes.
+
+2. <b>Criar um Cluster Kubernetes.</b>
 
 Para este exercicio foi utilizado o Kubernetes da Digital Ocean.
+<br>
 
 3. Realizar o Download do arquivo "config".
 
@@ -29,6 +31,7 @@ Isto irá mover e renomear o arquivo para pasta ".kube":
 ``` bash
 $ mv /mnt/c/Users/nomeDoUsuario/Downloads/k8s-1-21-9-do-0-nyc1-1644109980898-kubeconfig.yaml ~/.kube/config
 ```
+<br>
 
 4. Acessar o Ubuntu:
 
