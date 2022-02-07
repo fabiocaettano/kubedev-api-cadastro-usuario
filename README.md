@@ -426,6 +426,11 @@ $ kubectl apply -f ~/k8s/mognodb/service.yaml -n stage
 $ kubectl apply -f ~/k8s/mongodb/secret.yaml -n stage
 ```
 
+Consultar o IP do serviço MongoDB:
+``` bash
+$ kubectl get services -n stage
+```
+
 Configurar o arquivo ".env" no diretorio da api
 ``` .env
 DB_URI_STAGE=mongodb://mongouser:mongopwd@XX.XXX.XXX.XX:27017/admin   
