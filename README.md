@@ -21,14 +21,15 @@
 
 <h3>Cluster Kubernetes</h3>
 
-Neste exercicio para criar o cluster Kubernetes foi utilizado o serviço da Digital Ocean.
+O Cluster Kubernetes foi criado através do serviço da Digital Ocean.
 <br/>
 <br/>
 
 
 <h3>Arquivo config</h3>
 
-O arquivo config gerado pelo Kubernetes deverá ser colocado na pasta ".kube".
+1. Download
+O arquivo config gerado pelo Kubernetes deverá ser colocado na pasta "~/.kube".
 
 Executar o aplicativo WSL no Windows.
 
@@ -39,14 +40,25 @@ Isto irá mover e renomear o arquivo para pasta ".kube":
 ``` bash
 $ mv /mnt/c/Users/nomeDoUsuario/Downloads/k8s-1-21-9-do-0-nyc1-1644109980898-kubeconfig.yaml ~/.kube/config
 ```
+
+2. Comando de Linha
+
+Através da linha de comando é possivel acessar o contéudo do arquivo de configuração.
+Esta configuração deve ser salvo em um arquivo com nome "config", na pasta "~/.kube".
+
+``` bash
+$ kubectl config view --raw=true
+
+```
 <br/>
 <br/>
 
 <h3>Ubuntu</h3>
 
 Checar a conexão com o Kubernetes.
+
 O resultado serão os nodes configurados na criação do cluster.
-Comando no Prompot do Ubuntu:
+
 ``` bash
 $ kubernetes get nodes
 ```
@@ -56,7 +68,12 @@ $ kubernetes get nodes
 
 <h3>Namespaces Kubernetes</h3>
 
-O namespace ira separar os ambinentes em:  Developer, Stage e Production.
+O namespace tem a função de separar os ambientes em:  
+1. Developer;
+2. Stage;
+3. Production.
+
+
 ``` bash
 $ kubectl create namespace developer
 $ kubectl create namespace stage
@@ -73,7 +90,7 @@ $ kubectl get namespaces
 <h3>Service Kubernetes (MongoDb)</h3>
 
 Criar o manifesto service.yaml, no diretório k8s/mongodb:
-``` bash
+``` kubernetes
 apiVersion: v1
 kind: Service
 metadata:
@@ -96,7 +113,7 @@ $ kubectl apply -f ~/k8s/mongodb/service.yaml -n production
 
 ```
 
-Anotar o IP do service developer, ele sera informado no arquivo ".env" da api.
+Anotar o IP dos services, para ser utilizado no arquivo ".env" da api.
 
 ``` bash
 $ kubectl get services --all-namespaces --field-selector metadata.name=mongo-service
@@ -115,7 +132,7 @@ $ echo -n “senhaDoUsuario” | base64
 
 
 Criar o manifesto secret.yaml, no diretório k8s/mongodb:
-``` bash
+``` kubernetes
 apiVersion: v1
 kind: Secret
 metadata:
