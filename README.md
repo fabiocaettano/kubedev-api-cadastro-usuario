@@ -1,10 +1,13 @@
-<h1>Exercicio</h1>
+<h1>Kubedev - Exercicio - Aula 15</h1>
 
 <h2> Crie 3 ambientes para a sua API: Developer, Stage e Production.</h2> 
 
 <h2>Cada ambiente deve ter as suas respectivas  configurações de ambiente.</h2>
 
-1. <h3>Ferramentas utilizadas neste exercicio:</h3>
+<br/>
+<br/>
+
+<h3>Ferramentas utilizadas neste exercicio:</h3>
 - Windows 10 Pro;
 - WSL2;
 - Ubuntu 20.04;
@@ -14,14 +17,14 @@
 <br/>
 <br/>
 
-2. <h3>Criar um Cluster Kubernetes.</h3>
+<h3>Criar um Cluster Kubernetes.</h3>
 
 Para este exercicio foi utilizado o Kubernetes da Digital Ocean.
 <br/>
 <br/>
 
 
-3. <h3>Realizar o Download do arquivo "config".</h3>
+<h3>Realizar o Download do arquivo "config".</h3>
 
 O arquivo config gerado pelo Kubernetes deverá ser colocado na pasta ".kube".
 
@@ -37,7 +40,7 @@ $ mv /mnt/c/Users/nomeDoUsuario/Downloads/k8s-1-21-9-do-0-nyc1-1644109980898-kub
 <br/>
 <br/>
 
-4. <h3>Acessar o Ubuntu</h3>
+<h3>Acessar o Ubuntu</h3>
 
 Checar a conexão com o Kubernetes.
 O resultado serão os nodes configurados na criação do cluster.
@@ -45,10 +48,11 @@ Comando no Prompot do Ubuntu:
 ``` bash
 $ kubernetes get nodes
 ```
-<br>
+<br/>
+<br/>
 
 
-5. <b>Criar os namespaces</b>
+5. <h3>Criar os namespaces</h3>
 
 O namespace ira separar os ambinentes em:  Developer, Stage e Production.
 ``` bash
@@ -61,7 +65,8 @@ Consultar os namespaces:
 ``` bash
 $ kubectl get namespaces
 ```
-<br>
+<br/>
+<br/>
 
 6. <b>Service Kubernetes</b>
 
