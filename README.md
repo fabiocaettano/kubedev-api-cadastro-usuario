@@ -422,12 +422,24 @@ $ git checkout stage
 Aplicar o manifesto Service e Secret:
 
 ``` bash
-$ kubectl apply -f ~/k8s/mognodb/service.yaml -n stage
-$ kubectl apply -f ~/k8s/mongodb/secret.yaml -n stage
+$ kubectl apply -f ./k8s/mognodb/service.yaml -n stage
+$ kubectl apply -f ./k8s/mongodb/secret.yaml -n stage
+$ kubectl apply -f ./k8s/mongodb/deployment.yaml -n stage
+```
+
+ou em único comando:
+``` bash
+$ kubectl apply -f ~/k8s/mongodb/ -n stage
+```
+
+Localizar o IP:
+``` bash
+$ kubectl get services -n stage
 ```
 
 Configurar o arquivo ".env" no diretorio da api
 ``` .env
+DB_URI_DEVELOPER=mongodb://mongouser:mongopwd@XX.XXX.XXX.XX:27017/admin   
 DB_URI_STAGE=mongodb://mongouser:mongopwd@XX.XXX.XXX.XX:27017/admin   
 DB_USER=*********
 DB_PWD=********
@@ -474,21 +486,39 @@ spec:
 ```
 
 Apicar o manifesto para API:
-$ kubectl apply -f ~/path/configmap.yaml – n stage
-$ kubectl apply -f ~/k8s/api/service.yaml – n stage
-$ kubectl apply -f ~/path/deployment.yaml -n stage
-
-
-<h3> Consultar Cluster e Testar API</h3>
-
-Checar todos os objetos Kubernetes
 ``` bash
-$ kubectl get all -n stage
+$ kubectl apply -f ./k8s/api/configmap.yaml – n stage
+$ kubectl apply -f ./k8s/api/service.yaml – n stage
+$ kubectl apply -f ./k8s/api/deployment.yaml -n stage
 ```
+
+Ou em único comando:
+``` bash
+$ kubectl apply -f ./k8s/apu -n stage
+```
+<br/>
+<br/>
+
+
+<h3>Git</h3>
+ 
+ Enviar aplicação para o Git Hub o branch stage:
+ ``` bash
+$ git add .
+$ git commit -m “versao stage”
+$ git push -u origin stage
+```
+
+<br/>
+<br/>
+
+
+<h1> Consultar Cluster e Testar API</h1>
+
 
 Anotar o IP do service-api:
 ``` bash
-$ kubectl get services -n stage
+$ kubectl get services --all-namespaces --field-selector metadata.name=service-api
 ```
 
 Testar api:
@@ -496,7 +526,7 @@ Testar api:
 $ kubectl run -i -t --image fabiocaettano74/ubuntu-with-curl:v1 ping-test --restart=Never --rm /bin/bash
 ```
 
-Consultar o endpoint para receber a mensagem de boas vindas:
+Consultar o endpoint para receber a mensagem de boas vindas.
 ``` bash
 root@ping-test:/# curl http://XX.XXX.XXX.XX:8080
 ```
@@ -510,17 +540,3 @@ Realizar consulta:
 ``` bash
 root@ping-test:/# curl http://XX.XXX.XXX.XX:8080/usuario
 ```
-
-<br/>
-<br/>
-
- <h3>Git</h3>
- 
- Enviar aplicação para o Git Hub o branch stage:
- ``` bash
-$ git add .
-$ git commit -m “versao stage”
-$ git push -u origin stage
-```
-
-***
