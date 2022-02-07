@@ -7,7 +7,7 @@
 <br/>
 <br/>
 
-<h3>Ferramentas utilizadas neste exercicio:</h3>
+<h3>Ferramentas utilizadas:</h3>
 
 1. Windows 10 Pro;
 2. WSL2;
@@ -19,14 +19,14 @@
 <br/>
 <br/>
 
-<h3>Criar um Cluster Kubernetes.</h3>
+<h3>Cluster Kubernetes.</h3>
 
-Nste exercicio para criar o cluster Kubernetes foi utilizado o serviço da Digital Ocean.
+Neste exercicio para criar o cluster Kubernetes foi utilizado o serviço da Digital Ocean.
 <br/>
 <br/>
 
 
-<h3>Realizar o Download do arquivo "config".</h3>
+<h3>Arquivo config</h3>
 
 O arquivo config gerado pelo Kubernetes deverá ser colocado na pasta ".kube".
 
@@ -42,7 +42,7 @@ $ mv /mnt/c/Users/nomeDoUsuario/Downloads/k8s-1-21-9-do-0-nyc1-1644109980898-kub
 <br/>
 <br/>
 
-<h3>Acessar o Ubuntu</h3>
+<h3>Ubuntu</h3>
 
 Checar a conexão com o Kubernetes.
 O resultado serão os nodes configurados na criação do cluster.
@@ -54,7 +54,7 @@ $ kubernetes get nodes
 <br/>
 
 
-<h3>Criar os namespaces</h3>
+<h3>Namespaces Kubernetes</h3>
 
 O namespace ira separar os ambinentes em:  Developer, Stage e Production.
 ``` bash
@@ -167,13 +167,14 @@ spec:
 
 
 
-9. Configurar o arquivo ".env" no diretorio da api:
+<h3>Variaveis de Ambiente</h3>
 
+Configurar o arquivo ".env" no diretorio da api
 ``` bash
 DB_URI_DEVELOPER=mongodb://mongouser:mongopwd@10.245.89.18:27017/admin
 ```
 
-10.  No arquivo server.js configurar o endereço do MongoDb através da variável de ambiente.
+No arquivo server.js configurar o endereço do MongoDb através da variável de ambiente.
 
 ``` bash
 mongoose.connect(process.env.DB_URI_DEVELOPER,{
@@ -186,16 +187,25 @@ mongoose.connect(process.env.DB_URI_DEVELOPER,{
     }
 }
 ```
-11. No arquivo src/route.js da api, configurar no endpoint uma mensagem de retorno para indicar qual ambiente está sendo indicado:
+<br/>
+<br/>
+
+
+<h3>Mensagem de Boas Vindas</h3>
+No arquivo src/route.js da api, configurar no endpoint uma mensagem de retorno para indicar qual ambiente está sendo indicado:
 
 ``` bash
 routes.get('/',function(req,res){
     res.json({message: "Bem vindo ao Backend MongoDb - DEVELOPER"})
 })
 ```
+<br/>
+<br/>
 
-12. Criar o arquivo Dockerfile no diretório da api:
 
+<h3>Dockerfile</h3>
+
+Criar o arquivo Dockerfile no diretório da api:
 ``` bash
 FROM node:alpine
 WORKDIR /app
@@ -211,13 +221,21 @@ Criar a imagem
 ``` bash
 $ docker build -t fabiocaettano74/api-cadastro-usuario:developer .
 ```
+<br/>
+<br/>
 
-13. Upload para o docker hub:
+
+<h3>Docker Hub</h3>
+
+Upload para o docker hub:
 ``` bash
 $ docker push fabiocaettano74/api-cadastro-usuario:developer
 ```
+<br/>
+<br/>
 
-14. ConfigMap (API)
+
+<h3>ConfigMap Kubernetes (API)</h3>
 
 Criar o manifesto configmap.yaml, no diretório k8s/api.
 ``` bash
@@ -235,8 +253,10 @@ Aplicar o manifesto:
 ``` bash
 $ kubectl apply -f ~/path/configmap.yaml – n developer
 ```
+<br/>
+<br/>
 
-15. Service (API)
+<h3>Service Kubernetes (API)</h3>
 
 Criar o manifesto service.yaml, no diretorio k8s/api.
 
@@ -262,8 +282,10 @@ Aplicar o manifesto:
 ``` bash
 $ kubectl apply -f ~/k8s/api/service.yaml – n developer
 ```
+<br/>
+<br/>
 
-16. Deployment Kubernetes(API)
+<h3>Deployment Kubernetes(API)</h3>
 
 Criar o manifesto deployment.yanl, no diretorio k8s/api:
 ``` bash
