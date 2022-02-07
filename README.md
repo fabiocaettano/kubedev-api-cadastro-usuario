@@ -18,7 +18,7 @@
 Para este exercicio foi utilizado o Kubernetes da Digital Ocean.
 <br>
 
-3. Realizar o Download do arquivo "config".
+3. <b>Realizar o Download do arquivo "config".</b>
 
 O arquivo config gerado pelo Kubernetes deverá ser colocado na pasta ".kube".
 
@@ -33,7 +33,7 @@ $ mv /mnt/c/Users/nomeDoUsuario/Downloads/k8s-1-21-9-do-0-nyc1-1644109980898-kub
 ```
 <br>
 
-4. Acessar o Ubuntu:
+4. <b>Acessar o Ubuntu</b>
 
 Checar a conexão com o Kubernetes.
 O resultado serão os nodes configurados na criação do cluster.
@@ -41,8 +41,10 @@ Comando no Prompot do Ubuntu:
 ``` bash
 $ kubernetes get nodes
 ```
+<br>
 
-5. Criar os namespaces.
+
+5. <b>Criar os namespaces</b>
 
 O namespace ira separar os ambinentes em:  Developer, Stage e Production.
 ``` bash
@@ -55,9 +57,9 @@ Consultar os namespaces:
 ``` bash
 $ kubectl get namespaces
 ```
+<br>
 
-
-6. Service Kubernetes.
+6. <b>Service Kubernetes</b>
 
 Criar o manifesto service.yaml, no diretório k8s/mongodb:
 ``` bash
