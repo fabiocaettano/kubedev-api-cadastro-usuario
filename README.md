@@ -638,5 +638,5 @@ $ kubectl describe pod nomeDoPod -n nomeDoNamespace
 
 Visualizr o log:
 ``` bash
-$ kubectl logs pod nomeDoPod -n nomeDoNamespace
+$ kubectl logs pod/nomeDoPod -n nomeDoNamespace
 ```
