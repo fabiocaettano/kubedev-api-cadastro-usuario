@@ -482,12 +482,118 @@ $ git push -u origin stage
 <br/>
 <br/>
 
+***
 
+<h1>Ambiente Production </h1>
+
+Criar ambiente para o production na api:
+``` bash
+$ git branch production
+$ git checkout production
+```
+
+
+Aplicar o manifesto Service e Secret:
+
+``` bash
+$ kubectl apply -f ./k8s/mognodb/service.yaml -n production
+$ kubectl apply -f ./k8s/mongodb/secret.yaml -n production
+$ kubectl apply -f ./k8s/mongodb/deployment.yaml -n production
+```
+
+ou em único comando:
+``` bash
+$ kubectl apply -f ~/k8s/mongodb/ -n production
+```
+
+Localizar o IP:
+``` bash
+$ kubectl get services -n production
+```
+
+Configurar o arquivo ".env" no diretorio da api
+``` .env
+DB_URI_DEVELOPER=mongodb://mongouser:mongopwd@XX.XXX.XXX.XX:27017/admin   
+DB_URI_STAGE=mongodb://mongouser:mongopwd@XX.XXX.XXX.XX:27017/admin   
+DB_URI_PRODUCTION=mongodb://mongouser:mongopwd@XX.XXX.XXX.XX:27017/admin   
+DB_USER=*********
+DB_PWD=********
+```
+
+
+No arquivo server.js configurar o endereço do MongoDb através da variável de ambiente.
+``` js
+mongoose.connect(process.env.DB_URI_PRODUCTION,{
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+    auth:{
+        user : process.DB_USER,
+        password : process.DB_PWD
+
+    }
+}
+```
+
+No arquivo src/route.js da api, configurar no endpoint uma mensagem de retorno para indicar qual ambiente está sendo indicado:
+``` js
+routes.get('/',function(req,res){
+    res.json({message: "Bem vindo ao Backend MongoDb - PRODUCTION"})
+})
+```
+
+Criar a imagem:
+
+``` bash
+$ docker build -t fabiocaettano74/api-cadastro-usuario-production:v01 .
+```
+
+Upload para o docker hub:
+``` bash
+$ docker push fabiocaettano74/api-cadastro-usuario-production:v01
+```
+
+No manifesto do deployment da api informar a imagem da api: 
+``` kubernetes
+spec:            
+      containers:
+      - name: api
+        image: fabiocaettano74/api-cadastro-usuario-production:v01
+```
+
+Apicar o manifesto para API:
+``` bash
+$ kubectl apply -f ./k8s/api/configmap.yaml – n production
+$ kubectl apply -f ./k8s/api/service.yaml – n production
+$ kubectl apply -f ./k8s/api/deployment.yaml -n production
+```
+
+Ou em único comando:
+``` bash
+$ kubectl apply -f ./k8s/apu -n production
+```
+<br/>
+<br/>
+
+
+<h3>Git</h3>
+ 
+ Enviar aplicação para o Git Hub o branch stage:
+ ``` bash
+$ git add .
+$ git commit -m “versao production”
+$ git push -u origin production
+```
+
+<br/>
+<br/>
+
+
+***
 
 <h1> Consultar Cluster e Testar API</h1>
 
 
-Esta consulta irá retornar o IP de cada ambiente.
+ Esta consulta irá retornar o IP de cada ambiente.
 ``` bash
 $ kubectl get services --all-namespaces --field-selector metadata.name=service-api
 ```
@@ -497,7 +603,7 @@ Para testar api, execute:
 $ kubectl run -i -t --image fabiocaettano74/ubuntu-with-curl:v1 ping-test --restart=Never --rm /bin/bash
 ```
 
-Informe o IP do service para realizar os testes.
+Informe o IP do service de cada ambiente para realizar os testes.
 
 Consultar o endpoint para receber a mensagem de boas vindas.
 ``` bash
@@ -512,4 +618,25 @@ root@ping-test:/# curl -X POST -d '{"nome":"amora","senha":"898989"}' -H "Conten
 Realizar consulta:
 ``` bash
 root@ping-test:/# curl http://XX.XXX.XXX.XX:8080/usuario
+```
+
+***
+
+<h1> Resolvendo Problemas</h1>
+
+Através do log é possivel acessar o pod
+
+Visualizar os pods:
+``` bash
+$ kubectl gets pods -n nomeDoNamespace
+```
+
+Descritivo do pod:
+``` bash
+$ kubectl describe pod nomeDoPod -n nomeDoNamespace
+```
+
+Visualizr o log:
+``` bash
+$ kubectl logs pod nomeDoPod -n nomeDoNamespace
 ```
