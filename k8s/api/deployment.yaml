@@ -10,10 +10,10 @@ spec:
     metadata:          
       labels:
         app: api
-    spec:            
+    spec:       
       containers:
       - name: api
-        image: fabiocaettano74/api-cadastro-usuario-production:v01
+        image: registry.digitalocean.com/fabiocaettano74/api-cadastro-usuario-production:v02
         ports:
         - containerPort: 8080
           name: http
@@ -33,4 +33,6 @@ spec:
             valueFrom:
               secretKeyRef:
                 key: MONGO_INITDB_ROOT_PASSWORD
-                name: mongodb-secret           
+                name: mongodb-secret
+      imagePullSecrets:
+        - name: do-registry
